@@ -1,3 +1,5 @@
 import './style.css'
-import { App } from './scripts/pages/index'
+import { Index } from './scripts/pages/index'
 import { API, PhotographersApi } from './scripts/api/Api'
+import { Photographer } from './scripts/models/Photographer'
+import { PhotographerCard } from './scripts/templates/PhotographerCard'
