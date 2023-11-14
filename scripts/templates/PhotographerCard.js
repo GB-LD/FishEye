@@ -12,7 +12,7 @@ export class PhotographerCard {
 
     creatPhotographerCard() {
         const card = `
-        <a href="#" class="flex flex-col items-center">
+        <a href="../../html/photographer.html?photographe=${this._photographer.id}" class="flex flex-col items-center">
             <img src="${this._photographer.portrait}" alt="profil picture of ${this._photographer.name}" class="object-cover h-48 w-48 rounded-full">
             <h2 class="text-3xl text-flame-pea">${this._photographer.name}</h2>
         </a>

@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <title>Fisheye - photographe </title>
+    <title>Fisheye - photographe</title>
   </head>
-  <body>
-    <header>
-      <img src="assets/images/logo.png" class="logo" />
+  <body data-page="photographer" class="container mx-auto">
+    <header class="flex flex-row justify-between items-center h-20">
+      <img src="../assets/medias/logo.png" class="h-12" />
     </header>
     <main id="main">
-      <div class="photograph-header">
+      <section id="photograph-header" class="bg-gray-100 h-75 m-25">
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-      </div>
+      </section>
+      <div id="photograph-medias"></div>
     </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+    <div class="hidden" id="contact_modal">
+			<div class="modal rounded-md bg-red-400 w-1/2 flex flex-col items-center justify-between p-9 m-auto">
+				<header class="justify-between w-full">
+          <h2 class="text-16xl font-normal text-center">Contactez-moi</h2>
+          <img class="cursor-pointer" src="../assets/icons/close.svg" onclick="closeModal()" />
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
+				<form class="flex w-full flex-col items-start">
+					<div class="flex flex-col w-full items-start mb-7">
+						<label class="text-9xl text-gray-900">Prénom</label>
+						<input class="w-full h-17 border-none rounded-md" />
 					</div>
-          <button class="contact_button">Envoyer</button>
+          <button class="contact_button text-5xl font-bold text-white py-3 px-6 w-42 h-18 bg-red-800 rounded-md cursor-pointer">Envoyer</button>
 				</form>
 			</div>
 		</div>
-    <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
+    <script type="module" src="/main.js"></script>
   </body>
 </html>

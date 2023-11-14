@@ -2,6 +2,7 @@
 export default {
   content: [
     "./index.html",
+    "./html/photographer.html",
     "./scripts/*/*.{js,ts,jsx,tsx}",
   ],
   theme: {

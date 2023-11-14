@@ -1,7 +1,6 @@
 import { PhotographersApi } from "../api/Api";
-import { Photographer } from "../models/Photographer";
 import { PhotographerCard } from "../templates/PhotographerCard";
-
+import { PhotographersFactory } from "../factories/PhotographersFactory";
 
 export class Index {
     constructor() {
@@ -12,8 +11,7 @@ export class Index {
     async main() {
         const data = await this.photographersApi.get();
         const photographersData = data.photographers;
-        const photographers = photographersData.map(photographer => new Photographer(photographer));
-        console.log(this.$photographersSection);
+        const photographers = photographersData.map(photographer => PhotographersFactory.create(photographer, 'photographer'));
 
         photographers.forEach(photographer => {
             const photographerCard = new PhotographerCard(photographer);
@@ -22,5 +20,7 @@ export class Index {
     }
 }
 
-const index = new Index();
-index.main();
+if (window.location.pathname === '/index.html' || window.location.pathname === '/') {
+    const index = new Index();
+    index.main();
+}
