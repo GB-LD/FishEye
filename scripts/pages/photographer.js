@@ -1,10 +1,15 @@
 import { PhotographersApi } from "../api/Api";
 import { PhotographersFactory } from "../factories/PhotographersFactory";
+import { PhotographHeader } from "../templates/PhotographHeader";
+import { MediaCard } from "../templates/MediaCard";
 
 export class PhotographerPage {
     constructor(id) {
         this.photographersApi = new PhotographersApi ('/data/photographers.json');
         this._photographerId = id;
+
+        this.$PhotographeHeader = document.querySelector('#photograph-section');
+        this.$MediaSection = document.querySelector('#photograph-medias');
     }
 
     async main() {
@@ -27,8 +32,17 @@ export class PhotographerPage {
         const photographFilter = photographers.filter(photographer => photographer.id === Number.parseInt(this._photographerId));
         const mediasFilter = medias.filter(media => media.photographerId === Number.parseInt(this._photographerId));
 
-        console.log(photographFilter)
+        photographFilter.forEach(photograph => {
+            const photographHeader = new PhotographHeader(photograph);
+            this.$PhotographeHeader.appendChild(photographHeader.createPhotographHeader());
+        });
+
         console.log(mediasFilter);
+
+        mediasFilter.forEach(media => {
+            const mediaCard = new MediaCard(media);
+            this.$MediaSection.appendChild(mediaCard.createMediaCard());
+        });
     }
 }
 

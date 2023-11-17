@@ -23,12 +23,23 @@ export class Media {
     }
 
     get image() {
-        const path = this.title.replace((/ /g, "_"));
-        return `assets/medias/${this._photographerId}/${path}.jpg`;
+        return `../assets/medias/${this._photographerId}/${this._image}`;
+    }
+
+    get mediaPath() {
+        if (this._image !== null) {
+            return `../assets/medias/${this._photographerId}/${this._image}`;
+        } else if (this._video !== null) {
+            return `../assets/medias/${this._photographerId}/${this._video}`;
+        }
     }
 
     get video() {
         return `assets/medias/${this._video}`;
+    }
+
+    get likes() {
+        return this._likes;
     }
 
     get date() {
