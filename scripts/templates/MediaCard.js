@@ -31,7 +31,7 @@ export class MediaCard {
             <div>
                 <p class="inline text-2xl text-old-brick font-medium" aria-live="polite" aria-atomic="true" id="nombre-likes-1">${this._media.likes}</p>
                 <button class="inline" aria-label="Ajouter aux favoris" onclick="ajouterAuxFavoris(1)">
-                    ❤️
+                <i class="fa-solid fa-heart"></i>
                 </button>
             <div>
         <div>

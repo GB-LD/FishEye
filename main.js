@@ -12,3 +12,6 @@ import { Media } from './scripts/models/Media'
 import { PhotographerCard } from './scripts/templates/PhotographerCard'
 import { PhotographHeader } from './scripts/templates/PhotographHeader'
 import { MediaCard } from './scripts/templates/MediaCard' 
+import { PhotographerAside } from './scripts/templates/PhotographerAside'
+
+import { HelperFunctions } from './scripts/utils/helperFunctions'
