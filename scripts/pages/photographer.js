@@ -4,6 +4,7 @@ import { PhotographHeader } from "../templates/PhotographHeader";
 import { MediaCard } from "../templates/MediaCard";
 import { PhotographerAside } from "../templates/PhotographerAside";
 import { HelperFunctions } from "../utils/helperFunctions";
+import { contactModalFunctions } from "../utils/contactForm";
 
 
 export class PhotographerPage {
@@ -14,6 +15,7 @@ export class PhotographerPage {
         this.$PhotographeHeader = document.querySelector('#photograph-section');
         this.$MediaSection = document.querySelector('#photograph-medias');
         this.$PhotographeAside = document.querySelector('#photograph-aside');
+        this.$ModalHeaderTitle = document.querySelector('#modalHeaderTitle');
     }
 
     async main() {
@@ -36,21 +38,22 @@ export class PhotographerPage {
         const photographFilter = photographers.filter(photographer => photographer.id === Number.parseInt(this._photographerId));
         const mediasFilter = medias.filter(media => media.photographerId === Number.parseInt(this._photographerId));
         // nombre de likes des médias
-        const sumOfLikes = HelperFunctions.sumOfLikes(mediasFilter);
-        
-
+        const sumOfLikes = HelperFunctions.sumOfLikes(mediasFilter);        
 
         photographFilter.forEach(photograph => {
             const photographHeader = new PhotographHeader(photograph);
             this.$PhotographeHeader.appendChild(photographHeader.createPhotographHeader());
             const photographAside = new PhotographerAside(photograph, sumOfLikes);
-            this.$PhotographeAside.appendChild(photographAside.createPhotographAside())
+            this.$PhotographeAside.appendChild(photographAside.createPhotographAside());
+            this.$ModalHeaderTitle.innerHTML = 'Contactez-moi <br>' + photograph.name;
         });
 
         mediasFilter.forEach(media => {
             const mediaCard = new MediaCard(media);
             this.$MediaSection.appendChild(mediaCard.createMediaCard());
         });
+
+        contactModalFunctions();
     }
 }
 
