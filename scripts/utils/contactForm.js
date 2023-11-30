@@ -1,15 +1,19 @@
+// Fonction contenant les fonctionnalités de la modal de contact
 export function contactModalFunctions() {
 
-    // Gestion de l'ouverture et fermture de la modale
+    // Récupération des éléments HTML nécessaires
     const contactModal = document.querySelector('#contactModal'); 
     const contactModalContent = document.querySelector('#contactModalContent');  
     const openModalBtn = document.querySelector("#openModalBtn");
     const closeModalBtn = document.querySelector('#closeModalBtn');
 
+    // Événement pour ouvrir la modal
     openModalBtn.addEventListener('click', () => contactModal.classList.remove('hidden', 'opacity-0', 'pointer-events-none'));
 
+    // Événement pour fermer la modal
     closeModalBtn.addEventListener('click', () => contactModal.classList.add('opacity-0', 'pointer-events-none'));
 
+    // Événement pour fermer la modal lors du clic en dehors du contenu
     contactModal.addEventListener('click', (e) => {
         const closestContent = e.target.closest('#contactModalContent');
         
@@ -18,7 +22,7 @@ export function contactModalFunctions() {
         }
     });
 
-    //Gestion du formulaire
+    // Récupération des éléments du formulaire
     const form = document.querySelector('#contactForm');
     const firstNameInput = document.querySelector('#firstName');
     const lastNameInput = document.querySelector('#lastName');
@@ -26,21 +30,25 @@ export function contactModalFunctions() {
     const messageInput = document.querySelector('#message');
     const alertMessageFormElement = document.querySelector('#error-message');
 
+    // Fonction appelée lorsque le formulaire est valide
     function formisValid() {
-        alertMessageFormElement.innerHTML = 'Votre message à bien été envoyé 😃';
+        alertMessageFormElement.innerHTML = 'Votre message a bien été envoyé 😃';
         setTimeout(() => {
             contactModal.classList.add('opacity-0', 'pointer-events-none');
         }, 1500);
     }
 
+    // Fonction pour définir un message d'erreur dans le formulaire
     function setErrorFor(message) {
         alertMessageFormElement.innerHTML = message;
     }
 
+    // Fonction pour supprimer les messages d'erreur dans le formulaire
     function removeErrorMessage() {
         alertMessageFormElement.innerHTML = '';
     }
 
+    // Fonction pour vérifier la validité du prénom ou du nom
     function checkName(name, type){
         const nameRegEx = new RegExp("[a-zA-Z]{2,}");
         if (!nameRegEx.test(name.value)) {
@@ -51,6 +59,7 @@ export function contactModalFunctions() {
         }
     }
 
+    // Fonction pour vérifier la validité de l'email
     function mailIsValid(email, type) {
         const mailRegEx = new RegExp('[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+');
         if (!mailRegEx.test(email.value)) {
@@ -61,6 +70,7 @@ export function contactModalFunctions() {
         } 
       }
 
+    // Fonction pour vérifier la validité du message
     function messageIsValid(message, type) {
         const messsageRegex = new RegExp ('^.{40,}$');
         console.log(message.value);
@@ -72,15 +82,17 @@ export function contactModalFunctions() {
         };
     }
       
-
+    // Événement lors de la soumission du formulaire
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        // Validation des champs du formulaire
         try {
             checkName(firstNameInput, 'Prénom');
             checkName(lastNameInput, 'Nom');
             mailIsValid(emailInput, 'Email');
             
+            // Si le formulaire est valide, exécute la fonction correspondante
             formisValid()
         } catch (error) {
             console.error(error)
