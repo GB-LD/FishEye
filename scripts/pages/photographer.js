@@ -5,7 +5,7 @@ import { MediaCard } from "../templates/MediaCard";
 import { PhotographerAside } from "../templates/PhotographerAside";
 import { HelperFunctions } from "../utils/helperFunctions";
 import { contactModalFunctions } from "../utils/contactForm";
-
+import { LightBox } from "../utils/Lightbox";
 
 export class PhotographerPage {
     constructor(id) {
@@ -54,6 +54,7 @@ export class PhotographerPage {
         });
 
         contactModalFunctions();
+        LightBox.init()
     }
 }
 

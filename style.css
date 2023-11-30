@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .lightbox {
+        @apply bg-white bg-opacity-90 absolute top-0 left-0 w-full h-full transition-opacity ease-in-out;
+    }
+  }
+
 body {
     font-family: "DM Sans", sans-serif;
 }
