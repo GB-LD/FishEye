@@ -41,6 +41,10 @@ export class Media {
     get likes() {
         return this._likes;
     }
+    
+    set likes(num) {
+        return  this._likes = this._likes + num;
+    }
 
     get date() {
         return this._date;

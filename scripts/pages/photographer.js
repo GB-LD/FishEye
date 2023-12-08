@@ -3,14 +3,19 @@ import { PhotographersFactory } from "../factories/PhotographersFactory";
 import { PhotographHeader } from "../templates/PhotographHeader";
 import { MediaCard } from "../templates/MediaCard";
 import { PhotographerAside } from "../templates/PhotographerAside";
-import { HelperFunctions } from "../utils/helperFunctions";
 import { contactModalFunctions } from "../utils/contactForm";
 import { LightBox } from "../utils/Lightbox";
+import { LikesObserver } from "../utils/LikesObserver";
+import { MediaLikesCounter } from "../utils/MediaLikesCounter";
 
 export class PhotographerPage {
     constructor(id) {
         this.photographersApi = new PhotographersApi ('/data/photographers.json');
         this._photographerId = id;
+
+        this.likesObserver = new LikesObserver();
+        this.mediaLikesCounter = new MediaLikesCounter();
+        this.likesObserver.subscribe(this.mediaLikesCounter);
 
         this.$PhotographeHeader = document.querySelector('#photograph-section');
         this.$MediaSection = document.querySelector('#photograph-medias');
@@ -37,20 +42,20 @@ export class PhotographerPage {
         // Filtre des tableaux d'objets photographers et medias avec l'id du photographe provenant de l'url
         const photographFilter = photographers.filter(photographer => photographer.id === Number.parseInt(this._photographerId));
         const mediasFilter = medias.filter(media => media.photographerId === Number.parseInt(this._photographerId));
-        // nombre de likes des médias
-        const sumOfLikes = HelperFunctions.sumOfLikes(mediasFilter);        
+
+        
+    
+        mediasFilter.forEach(media => {
+            const mediaCard = new MediaCard(media, this.likesObserver);
+            this.$MediaSection.appendChild(mediaCard.createMediaCard());
+        });
 
         photographFilter.forEach(photograph => {
             const photographHeader = new PhotographHeader(photograph);
             this.$PhotographeHeader.appendChild(photographHeader.createPhotographHeader());
-            const photographAside = new PhotographerAside(photograph, sumOfLikes);
+            const photographAside = new PhotographerAside(photograph, this.likesObserver);
             this.$PhotographeAside.appendChild(photographAside.createPhotographAside());
             this.$ModalHeaderTitle.innerHTML = 'Contactez-moi <br>' + photograph.name;
-        });
-
-        mediasFilter.forEach(media => {
-            const mediaCard = new MediaCard(media);
-            this.$MediaSection.appendChild(mediaCard.createMediaCard());
         });
 
         contactModalFunctions();
