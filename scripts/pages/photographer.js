@@ -7,6 +7,7 @@ import { contactModalFunctions } from "../utils/contactForm";
 import { LightBox } from "../utils/Lightbox";
 import { LikesObserver } from "../utils/LikesObserver";
 import { MediaLikesCounter } from "../utils/MediaLikesCounter";
+import { FiltersMedia } from "../templates/FiltersMedia";
 
 export class PhotographerPage {
     constructor(id) {
@@ -56,6 +57,8 @@ export class PhotographerPage {
             const photographAside = new PhotographerAside(photograph, this.likesObserver);
             this.$PhotographeAside.appendChild(photographAside.createPhotographAside());
             this.$ModalHeaderTitle.innerHTML = 'Contactez-moi <br>' + photograph.name;
+            const filterMedia = new FiltersMedia();
+            filterMedia.createFiltersMedia();
         });
 
         contactModalFunctions();
