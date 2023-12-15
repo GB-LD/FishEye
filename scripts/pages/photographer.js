@@ -6,6 +6,7 @@ import { PhotographerAside } from "../templates/PhotographerAside";
 import { contactModalFunctions } from "../utils/contactForm";
 import { LightBox } from "../utils/Lightbox";
 import { LikesObserver } from "../utils/LikesObserver";
+import { SortingObserver } from "../utils/SortingObserver";
 import { MediaLikesCounter } from "../utils/MediaLikesCounter";
 import { FiltersMedia } from "../templates/FiltersMedia";
 
@@ -17,6 +18,8 @@ export class PhotographerPage {
         this.likesObserver = new LikesObserver();
         this.mediaLikesCounter = new MediaLikesCounter();
         this.likesObserver.subscribe(this.mediaLikesCounter);
+        this.sortingObserver = new SortingObserver();
+        this.sortingObserver.subscribe(this);
 
         this.$PhotographeHeader = document.querySelector('#photograph-section');
         this.$MediaSection = document.querySelector('#photograph-medias');
@@ -24,8 +27,49 @@ export class PhotographerPage {
         this.$ModalHeaderTitle = document.querySelector('#modalHeaderTitle');
     }
 
-    async main() {
-        // Fetch des données
+    displayMediaBySorting(medias, sortBy = "Popularité") {
+        this.$MediaSection.innerHTML = "";
+        const that = this;
+
+        // Media Sorting
+        const mediaSortByPopularity = [...medias].sort(function(a, b){return b.likes - a.likes});
+        const mediaSortByDate = [...medias].sort(function(a, b) {return new Date(b.date) - new Date(a.date)});
+        const mediaSortByTitle = [...medias].sort(function(a, b) {
+            const titleA = a.title.toUpperCase();
+            const titleB = b.title.toUpperCase();
+            if (titleA < titleB) {
+                return -1
+            } else if (titleA > titleB) {
+                return 1
+            } else {
+                return 0
+            }
+        });
+
+        function displayMediasAfterSorting (mediaSort) {
+            mediaSort.forEach(media => {
+                const mediaCard = new MediaCard(media, that.likesObserver);
+                that.$MediaSection.appendChild(mediaCard.createMediaCard());
+            });
+            LightBox.init();   
+        }
+
+        switch (sortBy) {
+            case 'Popularité':
+                displayMediasAfterSorting(mediaSortByPopularity);
+                break;
+            case 'Date':
+                displayMediasAfterSorting(mediaSortByDate);
+                break;
+            case 'Titre':
+                displayMediasAfterSorting(mediaSortByTitle);
+            break
+            default:
+                console.error("le type de tri n'est pas bon");
+        }
+    }
+
+    async getData() {
         let data;
         try {
             data = await this.photographersApi.get();
@@ -44,25 +88,34 @@ export class PhotographerPage {
         const photographFilter = photographers.filter(photographer => photographer.id === Number.parseInt(this._photographerId));
         const mediasFilter = medias.filter(media => media.photographerId === Number.parseInt(this._photographerId));
 
-        
-    
-        mediasFilter.forEach(media => {
-            const mediaCard = new MediaCard(media, this.likesObserver);
-            this.$MediaSection.appendChild(mediaCard.createMediaCard());
-        });
+        const dataObject = {
+            'photographData' : photographFilter,
+            'mediaData': mediasFilter
+        }
 
-        photographFilter.forEach(photograph => {
+        return dataObject;
+    }
+
+    async testOberver(sortby) {
+        const data = await this.getData();
+        this.displayMediaBySorting(data.mediaData, sortby);
+    }
+
+    async main() {
+        const data = await this.getData();
+        this.displayMediaBySorting(data.mediaData);
+
+        data.photographData.forEach(photograph => {
             const photographHeader = new PhotographHeader(photograph);
             this.$PhotographeHeader.appendChild(photographHeader.createPhotographHeader());
             const photographAside = new PhotographerAside(photograph, this.likesObserver);
             this.$PhotographeAside.appendChild(photographAside.createPhotographAside());
             this.$ModalHeaderTitle.innerHTML = 'Contactez-moi <br>' + photograph.name;
-            const filterMedia = new FiltersMedia();
+            const filterMedia = new FiltersMedia(this.sortingObserver);
             filterMedia.createFiltersMedia();
         });
 
         contactModalFunctions();
-        LightBox.init()
     }
 }
 

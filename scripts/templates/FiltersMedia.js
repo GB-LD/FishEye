@@ -1,9 +1,10 @@
 export class FiltersMedia {
-    constructor() {
+    constructor(observer) {
         this.$filterBox = document.querySelector('#filtersOptions');
         this.filterOptions = ['Popularité', 'Date', 'Titre'];
         this.currentOption = this.filterOptions[0];
-        this.freeOptions = this.displayFiltersOptions(); 
+        this.freeOptions = this.displayFiltersOptions();
+        this.sorterObserver = observer; 
     }
 
     displayFiltersOptions() {
@@ -13,20 +14,21 @@ export class FiltersMedia {
     }
 
     updateFilter(filter) {
-            const selectedFilter = filter.innerHTML;
-            const indexOfSelectedFilter = this.filterOptions.indexOf(selectedFilter);
-            this.currentOption = this.filterOptions[indexOfSelectedFilter];
-            this.displayFiltersOptions();
+        const selectedFilter = filter.innerHTML;
+        const indexOfSelectedFilter = this.filterOptions.indexOf(selectedFilter);
+        this.currentOption = this.filterOptions[indexOfSelectedFilter];
+        this.displayFiltersOptions();
     }
 
     createFiltersMedia() {
         const filterBoxContent = `
+        <span class="mr-2">Trier part</span>
         <div class="bg-old-brick w-40 text-lg font-bold text-white px-4 rounded-t rounded-b relative">
             <button class="w-full py-1.5 flex justify-between items-center justify-between">
                 <span class="block" id="filterSelected">${this.currentOption}</span>
                 <i class="block fa-solid fa-chevron-up ml-4 transition-rotate duration-200 ease-in-out"></i>
             </button>
-            <ul id="filterList" class="bg-old-brick absolute left-0 right-0 px-4 rounded-t rounded-b opacity-0 transition-opacity duration-200 ease-in-out">
+            <ul id="filterList" class="z-10 bg-old-brick absolute left-0 right-0 px-4 rounded-t rounded-b opacity-0 transition-opacity duration-200 ease-in-out">
                 ${this.freeOptions}
             </ul>
         </div>
@@ -38,6 +40,13 @@ export class FiltersMedia {
         const filterList = this.$filterBox.querySelector('#filterList');
         const filterSelected = this.$filterBox.querySelector('#filterSelected');
 
+        const changeFilterBoxStatus = () => {
+            filterList.classList.toggle('opacity-0');
+            filterList.classList.toggle('rounded-t');
+            filterBtn.parentElement.classList.toggle('rounded-b');
+            filterBtnChevron.classList.toggle('rotate-180');
+        }
+
         filterList.addEventListener('click', (e) => {
             const clickedElement = e.target;
             
@@ -45,13 +54,12 @@ export class FiltersMedia {
                 this.updateFilter(e.target);
                 filterSelected.textContent = this.currentOption;
                 filterList.innerHTML = this.freeOptions;
+                changeFilterBoxStatus();
+                this.sorterObserver.fire(this.currentOption);
             }
         });
 
-        filterBtn.addEventListener('click', () => {
-            filterList.classList.toggle('opacity-0');
-            filterBtnChevron.classList.toggle('rotate-180')
-        });
+        filterBtn.addEventListener('click', () => changeFilterBoxStatus());
 
         return this.$filterBox;
     }
