@@ -51,7 +51,7 @@ export class PhotographerPage {
                 const mediaCard = new MediaCard(media, that.likesObserver);
                 that.$MediaSection.appendChild(mediaCard.createMediaCard());
             });
-            LightBox.init();   
+            LightBox.init();
         }
 
         switch (sortBy) {

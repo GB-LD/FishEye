@@ -10,13 +10,6 @@ export class LightBox {
     // Construit la structure DOM et l'ajoute au corps du document
     this.element = this.buildDom(url);
     document.body.appendChild(this.element);
-
-    // Gestionnaires d'événements pour les actions de fermeture, précédente et suivante
-    this.onCloseBtnHandler = (e) => this.closeModal(e);
-    this.onPreviousBtnHandler = (e) => this.lightBoxPrev(e);
-    this.onNextBtnHandler = (e) => this.lightBoxNext(e);
-
-    // Configure les écouteurs d'événements pour répondre aux actions de l'utilisateur
     this.displayEventListeners();
   }
 
@@ -35,9 +28,12 @@ export class LightBox {
 
   // Configure les écouteurs d'événements pour les actions du clavier et des boutons
   displayEventListeners(){
-    document.addEventListener('keyup', (e) => {if (e.key === 'Escape') {this.onCloseBtnHandler(e)}} );
-    document.addEventListener('keydown', (e) => {if (e.keyCode === 37) {this.onPreviousBtnHandler(e)}});
-    document.addEventListener('keydown', (e) => {if (e.keyCode === 39) {this.onNextBtnHandler(e)}});
+    this.onCloseBtnHandler = (e) => this.closeModal(e);
+    this.onPreviousBtnHandler = (e) => this.lightBoxPrev(e);
+    this.onNextBtnHandler = (e) => this.lightBoxNext(e);
+    this.onKeydownHandler = (e) => this.onKeyDownEvent(e);
+
+    document.addEventListener('keydown', this.onKeydownHandler);
     document.querySelector('#lightboxCloseBtn').addEventListener('click', (e) => this.onCloseBtnHandler(e));
     document.querySelector('#lightboxPreviousBtn').addEventListener('click', (e) => this.onPreviousBtnHandler(e));
     document.querySelector('#lightboxNextBtn').addEventListener('click', (e) => this.onNextBtnHandler(e));
@@ -45,18 +41,16 @@ export class LightBox {
 
   // Supprime les écouteurs d'événements
   removeEventListeners() {
-    document.removeEventListener('keyup', this.onCloseBtnHandler);
-    document.removeEventListener('keydown', this.onPreviousBtnHandler);
-    document.removeEventListener('keydown', this.onNextBtnHandler);
+    document.removeEventListener('keydown', this.onKeydownHandler);
     document.querySelector('#lightboxCloseBtn').removeEventListener('click', this.onCloseBtnHandler);
     document.querySelector('#lightboxPreviousBtn').removeEventListener('click', this.onPreviousBtnHandler);
     document.querySelector('#lightboxNextBtn').removeEventListener('click', this.onNextBtnHandler);
-    console.log('écouteurs supprimés');
 }
 
 
   // Ferme la lightbox
   closeModal(e) {
+    e.preventDefault();
     this.element.classList.add('opacity-0', 'pointer-events-none');
     this.removeEventListeners();
     
@@ -130,6 +124,19 @@ export class LightBox {
       document.querySelector('#lightboxPreviousBtn').innerHTML = '<i class="fa-solid fa-chevron-left hover:text-old-brick-200"></i>';
     }
   }
+
+    // Fonctions gérant les événements keydown
+    onKeyDownEvent(e) {
+      if (e.key === 'Escape') {
+        this.closeModal(e);
+      }
+      if (e.keyCode === 37) {
+        this.onPreviousBtnHandler(e);
+      }
+      if (e.keyCode === 39) {
+        this.onNextBtnHandler(e);
+      }
+    }
 
   // Construit la structure DOM de la lightbox en fonction de l'URL
   buildDom(url) {
