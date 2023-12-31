@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="../assets/favicon.png">
@@ -8,16 +8,18 @@
     <title>FishEye</title>
   </head>
   <body class="container mx-auto" data-page="homepage">
-    <header class="flex flex-row justify-between items-center h-20 mb-28 mt-10">
-      <img src="assets/medias/logo.png" class="h-12" alt="fisheye logo"/>
-      <h1 class="text-old-brick text-3xl">Nos photographes</h1>
+    <header class="flex flex-row justify-between items-center h-20 mb-28 mt-10" aria-label="Logo FishEye et titre Nos photographes">
+      <img src="assets/medias/logo.png" class="h-16" alt="logo de FishEye"/>      
+      <h1 class="text-old-brick text-5xl">Nos photographes</h1>
   </header>
-    <main id="main">
-      <section id="photographers_section" class="grid grid-cols-3 gap-20 my-10 justify-items-center"></section>
+    <main id="main" aria-label="liste des photographes">
+      <nav>
+        <ul id="photographers_list" class="grid grid-cols-3 gap-20 my-10 justify-items-center list-none"></ul>
+      </nav>
     </main>
     <script type="module" src="/main.js"></script>
     <!-- <style>
       @import './style.css';
    </style> -->
   </body>
-</html>
+</html>   

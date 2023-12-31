@@ -4,7 +4,7 @@ import { PhotographersFactory } from "../factories/PhotographersFactory";
 
 export class Index {
     constructor() {
-        this.$photographersSection = document.querySelector("#photographers_section");
+        this.$photographersList = document.querySelector("#photographers_list");
         this.photographersApi = new PhotographersApi ('/data/photographers.json');
     }
 
@@ -15,7 +15,7 @@ export class Index {
 
         photographers.forEach(photographer => {
             const photographerCard = new PhotographerCard(photographer);
-            this.$photographersSection.appendChild(photographerCard.creatPhotographerCard());
+            this.$photographersList.appendChild(photographerCard.creatPhotographerCard());
         });
     }
 }
