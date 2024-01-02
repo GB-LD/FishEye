@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
   <head>
     <meta charset="utf-8">
@@ -13,16 +13,18 @@
     <div class="container mx-auto">
 
       <header class="flex flex-row justify-between items-center h-20 mb-10" id="test">
-        <a href="../index.html">
+        <a href="../index.html" aria-label="Retour à la page d'accueil">
           <img src="../assets/medias/logo.png" alt="Fisheye Home page" class="h-12" />
         </a>
       </header>
       
-      <main id="main relative">
+      <main id="main relative" aria-label="Contenu principal">
         <section id="photograph-section" class="bg-gray-100 h-75 m-25 rounded mb-10"></section>
-        <div id="filtersOptions" class="mb-10 flex items-center"></div>
-        <section id="photograph-medias" class="grid grid-cols-3 gap-20 mb-10 justify-items-center"></section>
-        <aside id="photograph-aside" class="sticky bottom-0 left-full w-fit"></aside>
+        <nav id="filtersOptions" class="mb-10 flex items-center" aria-label="Options de trie"></nav>
+        <section>
+          <ul id="photograph-medias" class="grid grid-cols-3 gap-20 mb-10 justify-items-center  "></ul>
+        </section>
+        <aside id="photograph-aside" class="sticky bottom-0 left-full w-fit" aria-label="Informations supplémentaires"></aside>
       </main>
     </div>
 

@@ -12,7 +12,7 @@ export class PhotographerCard {
 
     creatPhotographerCard() {
         const card = `
-        <a href="../../html/photographer.html?photographe=${this._photographer.id}" class="flex flex-col items-center focus:outline outline-offset-2 outline-4 outline-blue-700" aria-label="plus d'information sur ${this._photographer.name}">
+        <a href="../../html/photographer.html?photographe=${this._photographer.id}" class="flex flex-col items-center" aria-label="plus d'information sur ${this._photographer.name}">
             <img src="${this._photographer.portrait}" alt="photo de profil de ${this._photographer.name}" class="object-cover h-52 w-52 rounded-full">
             <h2 class="text-4xl text-flame-pea">${this._photographer.name}</h2>
             <p class="text-center text-xl text-old-brick mb-1 leading-none">${this._photographer.city}, ${this._photographer.country}</p>

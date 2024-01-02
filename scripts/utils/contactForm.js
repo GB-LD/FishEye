@@ -7,8 +7,19 @@ export function contactModalFunctions() {
     const openModalBtn = document.querySelector("#openModalBtn");
     const closeModalBtn = document.querySelector('#closeModalBtn');
 
+    // Récupération des éléments du formulaire
+    const form = document.querySelector('#contactForm');
+    const firstNameInput = document.querySelector('#firstName');
+    const lastNameInput = document.querySelector('#lastName');
+    const emailInput = document.querySelector('#email');
+    const messageInput = document.querySelector('#message');
+    const alertMessageFormElement = document.querySelector('#error-message');
+
     // Événement pour ouvrir la modal
-    openModalBtn.addEventListener('click', () => contactModal.classList.remove('hidden', 'opacity-0', 'pointer-events-none'));
+    openModalBtn.addEventListener('click', () => {
+        contactModal.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+        firstNameInput.focus();
+    });
 
     // Événement pour fermer la modal
     closeModalBtn.addEventListener('click', () => contactModal.classList.add('opacity-0', 'pointer-events-none'));
@@ -22,13 +33,12 @@ export function contactModalFunctions() {
         }
     });
 
-    // Récupération des éléments du formulaire
-    const form = document.querySelector('#contactForm');
-    const firstNameInput = document.querySelector('#firstName');
-    const lastNameInput = document.querySelector('#lastName');
-    const emailInput = document.querySelector('#email');
-    const messageInput = document.querySelector('#message');
-    const alertMessageFormElement = document.querySelector('#error-message');
+    contactModal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            contactModal.classList.add('opacity-0', 'pointer-events-none');
+            openModalBtn.focus();
+        }
+    })
 
     // Fonction appelée lorsque le formulaire est valide
     function formisValid() {

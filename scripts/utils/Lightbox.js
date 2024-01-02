@@ -11,6 +11,7 @@ export class LightBox {
     this.element = this.buildDom(url);
     document.body.appendChild(this.element);
     this.displayEventListeners();
+    document.querySelector('#lightboxCloseBtn').focus();
   }
 
   // Méthode statique pour initialiser LightBox pour toutes les images dans une galerie
@@ -24,6 +25,12 @@ export class LightBox {
         e.preventDefault();
         new LightBox(e.currentTarget.getAttribute('src'), gallery);
     }));
+    medias.forEach(media => media.addEventListener('keydown', (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        new LightBox(e.currentTarget.getAttribute('src'), gallery);
+      }
+  }));
   }
 
   // Configure les écouteurs d'événements pour les actions du clavier et des boutons
@@ -151,18 +158,18 @@ export class LightBox {
 
     dom.innerHTML = `
     <div id="lightboxContent" class="px-24 py-16 fixed top-0 left-0 w-full min-w-fit right-0 flex justify-center">
-      <button id="lightboxPreviousBtn" class="mx-8 text-6xl text-old-brick ">
+      <button id="lightboxPreviousBtn" class="mx-8 text-6xl text-old-brick" aria-label="média précédent">
       ${!isFirstMedia ? `<i class="fa-solid fa-chevron-left hover:text-old-brick-200"></i>` : ''}
       </button>
       <div id="lightboxContainer" class="relative">
-        <button id="lightboxCloseBtn" class="absolute left-full text-6xl pl-8 text-old-brick">
+        <button id="lightboxCloseBtn" class="absolute left-full text-6xl pl-8 text-old-brick" aria-label="fermer la lightbox">
           <i class="fa-solid fa-xmark hover:text-old-brick-200"></i>
         </button>
         <div id="lightBoxMedia">
-          ${this.generateMediaTag(mediaType, this.url)}
+        ${this.generateMediaTag(mediaType, this.url)}
         </div> 
       </div>
-      <button id="lightboxNextBtn" class="mx-8 text-6xl text-old-brick ">
+      <button id="lightboxNextBtn" class="mx-8 text-6xl text-old-brick" aria-label="média suivant ">
         ${!isLastMedia ? `<i class="fa-solid fa-chevron-right hover:text-old-brick-200"></i>` : ''}
       </button>
     </div>

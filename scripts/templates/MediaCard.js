@@ -3,7 +3,7 @@ export class MediaCard {
         this._media = media;
         this.likesObserver = likesObserver;
 
-        this.$MediaCard = document.createElement('article');
+        this.$MediaCard = document.createElement('li');
         this.$MediaCard.classList.add('w-full');
     }
 
@@ -13,9 +13,9 @@ export class MediaCard {
 
     defineMediaHTMLElement = () => {
         if (this._media.mediaPath.endsWith('.jpg')) {
-            return `<img src="${this._media.mediaPath}" alt="Description de la photo 1" class="rounded w-full object-cover aspect-square" />`;
+            return `<img src="${this._media.mediaPath}" alt="photographie ayant pour titre ${this._media.title}" class="rounded w-full object-cover aspect-square" tabindex="0"/>`;
         } else if (this._media.mediaPath.endsWith('.mp4')) {
-            return `<video src="${this._media.mediaPath}" alt="Description de la photo 1" class="rounded w-full object-cover aspect-square" controls autoplay muted >
+            return `<video src="${this._media.mediaPath}" alt="video ayant pour titre ${this._media.title}" class="rounded w-full object-cover aspect-square" controls autoplay muted tabindex="0">
                         Votre navigateur ne prends pas en charge les vidéo
                     </video>
             `;
@@ -28,10 +28,10 @@ export class MediaCard {
         const contentCard =`
         ${this.defineMediaHTMLElement()}
         <div class="flex justify-between mt-2.5" >
-            <h2 class="text-2xl text-old-brick">${this._media.title}</h2>
+            <h2 class="text-2xl text-old-brick" aria-label="titre du media">${this._media.title}</h2>
             <div>
-                <p class="inline text-2xl text-old-brick font-medium" aria-live="polite" aria-atomic="true" id="likesCount">${this._media.likes}</p>
-                <button class="text-old-brick text-2xl" aria-label="Ajouter aux favoris" id="likeBtn">
+                <p class="inline text-2xl text-old-brick font-medium" aria-live="polite" aria-atomic="true" id="likesCount" aria-label="nombre de like du média">${this._media.likes}</p>
+                <button class="text-old-brick text-2xl likeBtn" aria-label="Ajouter aux favoris">
                     <i class="fa-solid fa-heart"></i>
                 </button>
             <div>
@@ -39,7 +39,7 @@ export class MediaCard {
         `;
 
         this.$MediaCard.innerHTML = contentCard;
-        const likeBtn = this.$MediaCard.querySelector('#likeBtn');
+        const likeBtn = this.$MediaCard.querySelector('.likeBtn');
 
         likeBtn.addEventListener('click', () => {
             if (!likeBtn.classList.contains('favorite')) {
