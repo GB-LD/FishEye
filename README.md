@@ -7,6 +7,7 @@ Avant de commencer, assurez-vous d'avoir Node.js et npm installés sur votre mac
 Utilisez les commandes suivantes pour installer les dépendances et exécuter le projet :
 
 npm install
+
 npm run dev
 
 ## Description
