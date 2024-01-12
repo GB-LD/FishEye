@@ -44,7 +44,7 @@ export class LightBox {
     document.querySelector('#lightboxCloseBtn').addEventListener('click', (e) => this.onCloseBtnHandler(e));
     document.querySelector('#lightboxPreviousBtn').addEventListener('click', (e) => this.onPreviousBtnHandler(e));
     document.querySelector('#lightboxNextBtn').addEventListener('click', (e) => this.onNextBtnHandler(e));
-  };
+  }
 
   // Supprime les écouteurs d'événements
   removeEventListeners() {

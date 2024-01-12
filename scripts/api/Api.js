@@ -7,7 +7,7 @@ export class API {
         return fetch(this._url)
         .then(response => response.json())
         .then(data => data)
-        .catch(error => console.error('an error ocurs', err));
+        .catch(error => console.error('an error ocurs', error));
     }
 }
 

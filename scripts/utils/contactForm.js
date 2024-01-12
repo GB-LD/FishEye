@@ -12,7 +12,6 @@ export function contactModalFunctions() {
     const firstNameInput = document.querySelector('#firstName');
     const lastNameInput = document.querySelector('#lastName');
     const emailInput = document.querySelector('#email');
-    const messageInput = document.querySelector('#message');
     const alertMessageFormElement = document.querySelector('#error-message');
 
     // Événement pour ouvrir la modal
@@ -81,6 +80,7 @@ export function contactModalFunctions() {
       }
 
     // Fonction pour vérifier la validité du message
+    // eslint-disable-next-line no-unused-vars
     function messageIsValid(message, type) {
         const messsageRegex = new RegExp ('^.{40,}$');
         console.log(message.value);
@@ -89,7 +89,7 @@ export function contactModalFunctions() {
             throw new Error();
           } else {
               removeErrorMessage()
-        };
+        }
     }
       
     // Événement lors de la soumission du formulaire

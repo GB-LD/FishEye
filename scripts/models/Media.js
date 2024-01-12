@@ -1,3 +1,4 @@
+/* eslint-disable no-setter-return */
 export class Media {
     constructor(data) {
         this._id = data.id;
@@ -26,6 +27,7 @@ export class Media {
         return `../assets/medias/${this._photographerId}/${this._image}`;
     }
 
+    // eslint-disable-next-line getter-return
     get mediaPath() {
         if (this._image !== null) {
             return `../assets/medias/${this._photographerId}/${this._image}`;
